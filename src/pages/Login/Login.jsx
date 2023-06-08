@@ -3,6 +3,7 @@ import animationData from '../../assets/img/29298-girl-with-a-guitar.json';
 import lottie from 'lottie-web';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
+import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 const Login = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -29,6 +30,9 @@ const Login = () => {
 
         return <div ref={animationContainer} />;
     };
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => console.log(data);
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
@@ -38,7 +42,7 @@ const Login = () => {
                     </div>
                     <div className="card flex-shrink-0 w-1/2 max-w-sm shadow-2xl bg-base-100">
                         <div className="card-body">
-                            <form action="">
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <div >
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                         Email address
@@ -48,10 +52,11 @@ const Login = () => {
                                         name="email"
                                         type="email"
                                         autoComplete="email"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Email address"
+                                        {...register("email", { required: true })}
                                     />
+                                    {errors.email?.type === 'required' && <p className='text-red-600'> Email is required </p>}
                                 </div>
                                 <div className="relative">
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -63,9 +68,9 @@ const Login = () => {
                                             name="password"
                                             type={passwordVisible ? 'text' : 'password'}
                                             autoComplete="current-password"
-                                            required
                                             className="mt-1  block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                             placeholder="Password"
+                                            {...register("password", { required: true })}
                                         />
                                         <button
                                             type="button"
@@ -78,14 +83,19 @@ const Login = () => {
                                                 <RiEyeFill className="h-5 w-5 text-gray-400" />
                                             )}
                                         </button>
+                                        
                                     </div>
+                                    {errors.password?.type === 'required' && <p className='text-red-600 '> Password is required </p>}
                                 </div>
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
-                                <div className="form-control mt-6">
-                                    <button className="btn btn-primary">Login</button>
-                                </div>
+                                <button
+                                    type="submit"
+                                    className="w-full my-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Sign up
+                                </button>
                             </form>
                             <p>New here? <Link to='/signUp' className='text-blue-600'>Create a New Account</Link></p>
                         </div>

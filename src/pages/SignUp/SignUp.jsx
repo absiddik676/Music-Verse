@@ -4,10 +4,10 @@ import lottie from 'lottie-web';
 import animationData from '../../assets/img/88567-music.json';
 import { Link } from 'react-router-dom';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
+import { useForm } from "react-hook-form";
 const SignUp = () => {
     const LottieAnimation = () => {
         const animationContainer = useRef(null);
-
         useEffect(() => {
             const anim = lottie.loadAnimation({
                 container: animationContainer.current,
@@ -24,6 +24,8 @@ const SignUp = () => {
 
         return <div ref={animationContainer} />;
     };
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => console.log(data);
     return (
         <div >
             <div className="min-h-screen pt-14 bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -32,7 +34,7 @@ const SignUp = () => {
                         <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
                             Sign up for Music Courses
                         </h2>
-                        <form className="space-y-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div className='flex gap-5'>
                                 <div className='w-1/2'>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -40,14 +42,14 @@ const SignUp = () => {
                                     </label>
                                     <input
                                         id="name"
-                                        name="name"
                                         type="text"
                                         autoComplete="name"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Full Name"
+                                        placeholder="Name"
+                                        {...register("name", { required: true })}
 
                                     />
+                                     {errors.name?.type === 'required' && <p className='text-red-600'> Name is required </p>}
                                 </div>
                                 <div className='w-1/2'>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -55,13 +57,13 @@ const SignUp = () => {
                                     </label>
                                     <input
                                         id="email"
-                                        name="email"
                                         type="email"
                                         autoComplete="email"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Email address"
+                                        {...register("email", { required: true })}
                                     />
+                                    {errors.email?.type === 'required' && <p className='text-red-600'> Email is required </p>}
                                 </div>
                             </div>
                             <div className='flex gap-5'>
@@ -71,12 +73,10 @@ const SignUp = () => {
                                     </label>
                                     <input
                                         id="phoneNumber"
-                                        name="phoneNumber"
                                         type="tel"
-                                        autoComplete="tel"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Phone Number"
+                                        {...register("phoneNumber")}
                                     />
                                 </div>
                                 <div className='w-1/2'>
@@ -88,6 +88,7 @@ const SignUp = () => {
                                         name="address"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Address"
+                                        {...register("address")}
                                     ></input>
                                 </div>
                             </div>
@@ -101,10 +102,17 @@ const SignUp = () => {
                                         name="password"
                                         type="password"
                                         autoComplete="new-password"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Password"
+                                        {...register("password", { 
+                                            required: true,
+                                            minLength:6,
+                                            pattern:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+                                         })}
                                     />
+                                    {errors.password?.type === 'required' && <p className='text-red-600'> Password is required </p>}
+                                    {errors.password?.type === 'minLength' && <p className='text-red-600'> Password must be 6 character</p>}
+                                    {errors.password?.type === 'pattern' && <p className='text-red-600'> Password must have 1 uppercase and 1 spacial character </p>}
                                 </div>
                                 <div className='w-1/2'>
                                     <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
@@ -115,10 +123,18 @@ const SignUp = () => {
                                         name="confirmPassword"
                                         type="password"
                                         autoComplete="new-password"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Confirm Password"
+                                        {...register("confirmPassword", { 
+                                            required: true,
+                                            minLength: 6,
+                                            pattern:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+                                         })}
                                     />
+
+                                    {errors.confirmPassword?.type === 'required' && <p className='text-red-600'> Password is required </p>}
+                                    {errors.confirmPassword?.type === 'minLength' && <p className='text-red-600'> Password must be 6 character</p>}
+                                    {errors.confirmPassword?.type === 'pattern' && <p className='text-red-600'> Password must have 1 uppercase and 1 spacial character </p>}
                                 </div>
                             </div>
                             <div className='flex gap-5'>
@@ -129,9 +145,9 @@ const SignUp = () => {
                                     <select
                                         id="gender"
                                         name="gender"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         defaultValue={''}
+                                        {...register("gender")}
                                     >
                                         <option value="" disabled >Select gender</option>
                                         <option value="male">Male</option>
@@ -148,10 +164,11 @@ const SignUp = () => {
                                         name="photoURL"
                                         type="text"
                                         autoComplete="url"
-                                        required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Photo URL"
+                                        {...register("photoURL", { required: true })}
                                     />
+                                    {errors.photoURL?.type === 'required' && <p className='text-red-600'> Password is required </p>}
                                 </div>
                             </div>
                             <div>
