@@ -1,10 +1,9 @@
 
-import Img2 from '../../assets/img/image-removebg-preview.png'
 import React, { useRef, useEffect } from 'react';
 import lottie from 'lottie-web';
 import animationData from '../../assets/img/88567-music.json';
-import { FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 const SignUp = () => {
     const LottieAnimation = () => {
         const animationContainer = useRef(null);
@@ -132,8 +131,9 @@ const SignUp = () => {
                                         name="gender"
                                         required
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        defaultValue={''}
                                     >
-                                        <option value="" disabled selected>Select gender</option>
+                                        <option value="" disabled >Select gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="other">Other</option>
@@ -165,13 +165,7 @@ const SignUp = () => {
                         </form>
                         <p className='text-center py-5 '>Already registered? <Link to='/login' className='text-blue-600'>Go to log in</Link></p>
                        <div className='flex justify-center'>
-                       <button
-                            className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md flex items-center justify-center space-x-2"
-
-                        >
-                            <FaGoogle size={20} />
-                            <span>Sign In with Google</span>
-                        </button>
+                       <GoogleLoginBtn/>
                        </div>
                     </div>
 
