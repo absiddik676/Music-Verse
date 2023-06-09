@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import { AuthContext } from '../../../provider/AuthProvider';
+import { FiLogOut, FiLogIn } from 'react-icons/fi';
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+    const handleLogout = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => {
+                console.log(error);
+            })
+    }
     return (
         <div className='max-w-7xl mx-auto'>
             <div className="navbar max-w-7xl bg-transparent z-50 fixed ">
@@ -14,21 +23,49 @@ const Navbar = () => {
                             <li><Link to='/'>Home</Link></li>
                             <li><Link>Instructors</Link></li>
                             <li><Link to='/classes'>Classes</Link></li>
-                            <li><Link>Dashboard </Link></li>
+                            {user?<li><Link>Dashboard </Link></li>:''}
                         </ul>
                     </div>
                     <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                        <li><Link  to='/'>Home</Link></li>
+                        <li><Link to='/'>Home</Link></li>
                         <li><Link>Instructors</Link></li>
                         <li><Link to='/classes'>Classes</Link></li>
-                        <li><Link>Dashboard </Link></li>
+                        {user?<li><Link>Dashboard </Link></li>:''}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    {
+                        user ? <>
+                            <button
+                                className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
+                                onClick={handleLogout}
+                            >
+                                <FiLogOut />
+                                <span>Logout</span>
+                            </button>
+                        </> : <>
+                            <Link to='/login'>
+                                <button
+                                    className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600"
+
+                                >
+                                    <FiLogIn />
+                                    <span>Login</span>
+                                </button>
+                            </Link>
+                        </>
+                    }
+
+                    {user ? <>
+                        <div className="avatar ml-6">
+                            <div className=" rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 w-12">
+                                <img src={user?.photoURL} />
+                            </div>
+                        </div>
+                    </> : ''}
                 </div>
             </div>
         </div>
