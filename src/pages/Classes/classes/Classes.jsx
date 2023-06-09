@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React, { useState } from 'react';
 import SingleClass from '../SingleClass/SingleClass';
 
@@ -18,9 +17,7 @@ const Classes = () => {
     return (
         <div className='max-w-7xl grid grid-cols-3 gap-5 mx-auto pt-24'>
             {
-                classes.map(singleClass => <SingleClass key={singleClass._id} singleClass={singleClass}/>)
-                
-                
+                classes.map(singleClass => <SingleClass key={singleClass._id} singleClass={singleClass}/>)   
             }
         </div>
     );
