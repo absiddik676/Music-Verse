@@ -1,11 +1,15 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext, useState } from 'react';
 import lottie from 'lottie-web';
 import animationData from '../../assets/img/88567-music.json';
 import { Link } from 'react-router-dom';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 import { useForm } from "react-hook-form";
+import { AuthContext } from '../../provider/AuthProvider';
+import axios from 'axios';
 const SignUp = () => {
+    const {createUser,addUserNameAndPhoto} = useContext(AuthContext);
+    const [errorMessage, setErrorMessage] = useState('');
     const LottieAnimation = () => {
         const animationContainer = useRef(null);
         useEffect(() => {
@@ -24,8 +28,35 @@ const SignUp = () => {
 
         return <div ref={animationContainer} />;
     };
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        setErrorMessage('')
+        if (data.password !== data.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+          }
+      
+        createUser(data.email,data.password)
+        .then(result =>{
+            console.log(result.user);
+            addUserNameAndPhoto(data.name, data.photoURL);
+            reset()
+            const saveUser = { name: data.name, email: data.email, phoneNumber:data.phoneNumber,gender:data.gender ,address:data.address}
+            axios.post(`${import.meta.env.VITE_mainURL}/user`,saveUser)
+            .then(res=>{
+                console.log(res.data);
+            })
+        })
+        .catch(error =>{
+            console.log(error.message);
+            if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+                setErrorMessage('Email is already in use');
+              } else {
+                setErrorMessage('An error occurred. Please try again.');
+              }
+        })
+
+    };
     return (
         <div >
             <div className="min-h-screen pt-14 bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -34,6 +65,7 @@ const SignUp = () => {
                         <h2 className="text-3xl font-extrabold text-gray-900 mb-4">
                             Sign up for Music Courses
                         </h2>
+                        
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div className='flex gap-5'>
                                 <div className='w-1/2'>
@@ -180,6 +212,7 @@ const SignUp = () => {
                                 </button>
                             </div>
                         </form>
+                        <p className='text-red-600 text-center pt-5'>{errorMessage}</p>
                         <p className='text-center py-5 '>Already registered? <Link to='/login' className='text-blue-600'>Go to log in</Link></p>
                        <div className='flex justify-center'>
                        <GoogleLoginBtn/>

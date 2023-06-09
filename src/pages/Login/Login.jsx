@@ -1,12 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import animationData from '../../assets/img/29298-girl-with-a-guitar.json';
 import lottie from 'lottie-web';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../provider/AuthProvider';
+
 const Login = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const { loginUser } = useContext(AuthContext);
+    const [errorMessage, setErrorMessage] = useState('');
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
@@ -31,8 +35,22 @@ const Login = () => {
         return <div ref={animationContainer} />;
     };
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        loginUser(data.email, data.password)
+            .then(result => {
+                console.log(result.user);
+                reset()
+            })
+            .catch(error => {
+                console.log(error.message);
+                if (error.message === 'Firebase: Error (auth/wrong-password).') {
+                    setErrorMessage('Email is already in use');
+                } else {
+                    setErrorMessage('An error occurred. Please try again.');
+                }
+            })
+    };
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
@@ -83,7 +101,7 @@ const Login = () => {
                                                 <RiEyeFill className="h-5 w-5 text-gray-400" />
                                             )}
                                         </button>
-                                        
+
                                     </div>
                                     {errors.password?.type === 'required' && <p className='text-red-600 '> Password is required </p>}
                                 </div>
@@ -97,6 +115,7 @@ const Login = () => {
                                     Sign up
                                 </button>
                             </form>
+                            {errorMessage && <p className='text-red-600 text-center'>{errorMessage}</p>}
                             <p>New here? <Link to='/signUp' className='text-blue-600'>Create a New Account</Link></p>
                         </div>
                         <div className='flex justify-center mb-6'>
