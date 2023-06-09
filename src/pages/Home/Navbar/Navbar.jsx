@@ -33,7 +33,7 @@ const Navbar = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link>Instructors</Link></li>
                         <li><Link to='/classes'>Classes</Link></li>
-                        {user?<li><Link>Dashboard </Link></li>:''}
+                        {user?<li><Link to='/dashboard'>Dashboard </Link></li>:''}
                     </ul>
                 </div>
                 <div className="navbar-end">
