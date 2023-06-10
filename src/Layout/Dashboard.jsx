@@ -45,7 +45,7 @@ const Dashboard = () => {
                             {
                                 isAdmin && <>
                                 <NavLink to='/dashboard/addaClass' className='mb-3'><span className='flex items-center'><FiSettings   className="mr-2" size={'24'} />Manage Classes</span></NavLink>
-                                <NavLink to='/dashboard/addaClass'><span className='flex items-center'><BsPeopleFill    className="mr-2" size={'24'} />Manage Users</span></NavLink>
+                                <NavLink to='/dashboard/ManageUser'><span className='flex items-center'><BsPeopleFill    className="mr-2" size={'24'} />Manage Users</span></NavLink>
                                 </>
                             }
                             {
