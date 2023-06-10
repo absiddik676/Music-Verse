@@ -6,6 +6,8 @@ import Login from "../pages/Login/Login";
 import Classes from "../pages/Classes/classes/Classes";
 import Dashboard from "../Layout/Dashboard";
 import MySelectedClasses from "../pages/Dashboard/Student/MySelectedClasses/MySelectedClasses";
+import AddaClass from "../pages/Dashboard/Instrator/AddaClass/AddaClass";
+import Test from "../pages/Dashboard/Instrator/AddaClass/test";
 
 
 const router = createBrowserRouter([
@@ -39,7 +41,15 @@ const router = createBrowserRouter([
           path:'/dashboard/selected',
           element:<MySelectedClasses/>
         },
+        {
+          path:'/dashboard/addaClass',
+          element:<AddaClass/>
+        },
       ]
+    },
+    {
+      path:'test',
+      element:<Test/>
     }
   ]);
   export default router;

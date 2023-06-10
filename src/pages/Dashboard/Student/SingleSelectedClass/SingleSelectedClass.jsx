@@ -30,6 +30,7 @@ const SingleSelectedClass = ({myClass,refetch}) => {
             }
           })
     }
+    console.log(myClass);
     return (
         <div className='mx-5'>
             <div className="card w-full bg-base-100 ">

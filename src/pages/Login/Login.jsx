@@ -45,7 +45,7 @@ const Login = () => {
             .catch(error => {
                 console.log(error.message);
                 if (error.message === 'Firebase: Error (auth/wrong-password).') {
-                    setErrorMessage('Email is already in use');
+                    setErrorMessage('Wrong password');
                 } else {
                     setErrorMessage('An error occurred. Please try again.');
                 }
