@@ -11,14 +11,20 @@ import { IoIosAdd } from 'react-icons/io';
 import { FaGraduationCap ,   } from 'react-icons/fa';
 import { BsPeopleFill } from 'react-icons/bs';
 import useAdmin from '../hook/useAdmin';
+import useStudent from '../hook/useStudent';
+import useInstructor from '../hook/useInstructor';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext)
-    const [isAdmin,isLoading] = useAdmin()
-    // const isAdmin = true;
-    console.log(isAdmin);
-    const isInstructor = false
-    const isStudent = false
+    const [isAdmin,isAdminLoading] = useAdmin();
+    const [isInstructor,isInstructorLoading] = useInstructor();
+    const [isStudent,isStudentLoading] = useStudent();
+
+    console.log({isAdmin});
+    console.log({isInstructor});
+    console.log({isStudent});
+    // const isInstructor = false
+    // const isStudent = false
     return (
         <div>
             <div>
