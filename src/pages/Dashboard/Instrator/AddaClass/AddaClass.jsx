@@ -6,6 +6,7 @@ import { useToasts } from 'react-toast-notifications';
 const VITE_IMGBB_TOKEN = import.meta.env.VITE_IMGBB_TOKEN
 const AddaClass = () => {
     const {user} = useContext(AuthContext)
+    
     const { addToast, toastStack } = useToasts();
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${VITE_IMGBB_TOKEN}`
     const { register, handleSubmit,setValue, reset, formState: { errors } } = useForm({
