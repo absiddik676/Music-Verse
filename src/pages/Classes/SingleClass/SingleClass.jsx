@@ -1,16 +1,21 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../provider/AuthProvider';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 
 const SingleClass = ({singleClass}) => {
     const {user} = useContext(AuthContext)
+    const { addToast, toastStack } = useToasts();
     const handelSelectClass = (classes)=>{
 
         const selectedClass = {classId:classes._id,name:classes.name,price:classes.price,studentEmail:user?.email,image:classes.image}
 
         axios.post(`${import.meta.env.VITE_mainURL}/selected-class`,selectedClass)
         .then(res =>{
-            console.log(res.data);
+            console.log(res.data.insertedId);
+            if(res.data.insertedId){
+                addToast('Your class save successfully', { appearance: 'success', autoDismiss: true, });
+            }
         })
     }
     return (

@@ -5,7 +5,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import Classes from "../pages/Classes/classes/Classes";
 import Dashboard from "../Layout/Dashboard";
-import MySelectedClasses from "../pages/Dashboard/MySelectedClasses/MySelectedClasses";
+import MySelectedClasses from "../pages/Dashboard/Student/MySelectedClasses/MySelectedClasses";
 
 
 const router = createBrowserRouter([

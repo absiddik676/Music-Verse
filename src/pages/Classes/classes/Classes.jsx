@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import SingleClass from '../SingleClass/SingleClass';
+import axios from 'axios';
 
 const Classes = () => {
 
