@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../provider/AuthProvider';
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
+import useAdmin from '../../../hook/useAdmin';
+import useInstructor from '../../../hook/useInstructor';
+import useStudent from '../../../hook/useStudent';
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     const handleLogout = () => {
@@ -11,6 +14,9 @@ const Navbar = () => {
                 console.log(error);
             })
     }
+    const [isAdmin,isAdminLoading] = useAdmin();
+    const [isInstructor,isInstructorLoading] = useInstructor();
+    const [isStudent,isStudentLoading] = useStudent();
     return (
         <div className='max-w-7xl mx-auto'>
             <div className="navbar max-w-7xl bg-transparent z-50 fixed ">
@@ -33,7 +39,7 @@ const Navbar = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link>Instructors</Link></li>
                         <li><Link to='/classes'>Classes</Link></li>
-                        {user?<li><Link to='/dashboard/selected'>Dashboard </Link></li>:''}
+                        {user?<li><Link to={`/dashboard/${isAdmin && 'ManageUser' || isInstructor && 'myClasses' || isStudent && 'selected'}`}>Dashboard </Link></li>:''}
                     </ul>
                 </div>
                 <div className="navbar-end">

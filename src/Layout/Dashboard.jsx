@@ -45,7 +45,7 @@ const Dashboard = () => {
                             </div>
                             <div>
                                 <p className='text-white font-semibold '>{user?.displayName}</p>
-                                <p className='text-white font-semibold '>student</p>
+                                <p className='text-white font-semibold '>{isAdmin && 'admin' || isInstructor && 'Instructor' || isStudent && 'Student'}</p>
                             </div>
                         </div>
                         <ul className="menu p-4 w-64 font-semibold text-lg text-[#9a9a9a] h-full bg-[#262626]">

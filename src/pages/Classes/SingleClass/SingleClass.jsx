@@ -22,7 +22,7 @@ const SingleClass = ({singleClass}) => {
     return (
         <div>
                 <div className="card w-96 bg-base-100 ">
-                        <figure><img src={singleClass.imgURL} alt="Shoes" /></figure>
+                        <figure><img className='h-52 rounded-t-lg' src={singleClass.imgURL} alt="Shoes" /></figure>
                         <div className="card-body hover:shadow-md ">
                             <h2 className="card-title">{singleClass.className}</h2>
                             <h2 className='text-xl  '>Instructor name: {singleClass.InstructorName}</h2>
