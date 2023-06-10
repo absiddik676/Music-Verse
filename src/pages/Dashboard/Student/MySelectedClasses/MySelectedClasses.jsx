@@ -10,7 +10,7 @@ const MySelectedClasses = () => {
         queryKey: ['selectedClass'],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/classes/${user?.email}`)
+            const res = await axios.get(`http://localhost:5000/selected-class/${user?.email}`)
             return res.data
         }
     })
@@ -20,7 +20,7 @@ const MySelectedClasses = () => {
             <h1 className='text-3xl font-semibold text-center my-3'>MySelectedClasses</h1>
             <div className='grid grid-cols-3 gap-5'>
                 {
-                    myClasses.map(myClass => <SingleSelectedClass key={myClass._id} myClass={myClass}></SingleSelectedClass>)
+                    myClasses.map(myClass => <SingleSelectedClass key={myClass._id} refetch={refetch} myClass={myClass}></SingleSelectedClass>)
                 }
             </div>
         </div>
