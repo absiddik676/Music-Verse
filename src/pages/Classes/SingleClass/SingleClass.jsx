@@ -8,7 +8,7 @@ const SingleClass = ({singleClass}) => {
     const { addToast, toastStack } = useToasts();
     const handelSelectClass = (classes)=>{
 
-        const selectedClass = {classId:classes._id,name:classes.name,price:classes.price,studentEmail:user?.email,image:classes.imgURL}
+        const selectedClass = {classId:classes._id,name:classes.className,price:classes.price,studentEmail:user?.email,image:classes.imgURL}
 
         axios.post(`${import.meta.env.VITE_mainURL}/selected-class`,selectedClass)
         .then(res =>{
@@ -18,13 +18,14 @@ const SingleClass = ({singleClass}) => {
             }
         })
     }
+    console.log(singleClass);
     return (
         <div>
                 <div className="card w-96 bg-base-100 ">
                         <figure><img src={singleClass.imgURL} alt="Shoes" /></figure>
                         <div className="card-body hover:shadow-md ">
-                            <h2 className="card-title">{singleClass.InstructorName}</h2>
-                            <h2 className='text-xl  '>Instructor name: {singleClass.instructor}</h2>
+                            <h2 className="card-title">{singleClass.className}</h2>
+                            <h2 className='text-xl  '>Instructor name: {singleClass.InstructorName}</h2>
                             <div className='flex justify-between'>
                                 <h1 className='text-xl font-semibold'>Available seats: {singleClass.AvailableSeats}</h1>
                                 <h1 className='text-xl font-semibold'>price: ${singleClass.price}</h1>

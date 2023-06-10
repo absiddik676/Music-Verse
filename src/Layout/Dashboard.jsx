@@ -6,15 +6,16 @@ import { RiHistoryFill } from 'react-icons/ri';
 import { AiOutlineHome } from 'react-icons/ai';
 import { AuthContext } from '../provider/AuthProvider';
 import { TfiBlackboard } from "react-icons/tfi";
-import { FiUsers } from 'react-icons/fi';
+import { FiUsers, FiSettings } from 'react-icons/fi';
 import { IoIosAdd } from 'react-icons/io';
-import { FaGraduationCap } from 'react-icons/fa';
+import { FaGraduationCap ,   } from 'react-icons/fa';
+import { BsPeopleFill } from 'react-icons/bs';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext)
 
-    const isAdmin = false;
-    const isInstructor = true
+    const isAdmin = true;
+    const isInstructor = false
     const isStudent = false
     return (
         <div>
@@ -42,12 +43,15 @@ const Dashboard = () => {
                         <ul className="menu p-4 w-64 font-semibold text-lg text-[#9a9a9a] h-full bg-[#262626]">
                             {/* Sidebar content here */}
                             {
-                                isAdmin && <><h1>admin</h1></>
+                                isAdmin && <>
+                                <NavLink to='/dashboard/addaClass' className='mb-3'><span className='flex items-center'><FiSettings   className="mr-2" size={'24'} />Manage Classes</span></NavLink>
+                                <NavLink to='/dashboard/addaClass'><span className='flex items-center'><BsPeopleFill    className="mr-2" size={'24'} />Manage Users</span></NavLink>
+                                </>
                             }
                             {
                                 isInstructor && <>
                                 <NavLink to='/dashboard/addaClass'><span className='flex items-center'><IoIosAdd className="mr-2" size={'24'} />Add a Class</span></NavLink>
-                                <NavLink to='/dashboard/myClass'><span className='flex items-center'><FaGraduationCap className="mr-2" size={'24'} />My Classes</span></NavLink>
+                                <NavLink to='/dashboard/myClasses'><span className='flex items-center'><FaGraduationCap className="mr-2" size={'24'} />My Classes</span></NavLink>
                                 </>
                             }
                             {
