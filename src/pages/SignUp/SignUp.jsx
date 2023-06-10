@@ -41,7 +41,7 @@ const SignUp = () => {
             console.log(result.user);
             addUserNameAndPhoto(data.name, data.photoURL);
             reset()
-            const saveUser = { name: data.name, email: data.email, phoneNumber:data.phoneNumber,gender:data.gender ,address:data.address}
+            const saveUser = { name: data.name, email: data.email, phoneNumber:data.phoneNumber,gender:data.gender ,address:data.address, role:'student'}
             axios.post(`${import.meta.env.VITE_mainURL}/user`,saveUser)
             .then(res=>{
                 console.log(res.data);

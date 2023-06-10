@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import anime from 'animejs/lib/anime.es.js';
 
-
-
 const BouncingMusicNode = ({img,translateY1,translateY2}) => {
     const musicNodeRef = useRef(null);
     const animationTimeoutRef = useRef(null);

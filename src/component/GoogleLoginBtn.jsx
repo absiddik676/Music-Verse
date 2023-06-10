@@ -7,7 +7,7 @@ const GoogleLoginBtn = () => {
     const handelGoogleLogin = () =>{
         signInWithGoogle()
         .then(res => {
-            const saveUser = {name:res.user.displayName,email:res.user.email}
+            const saveUser = {name:res.user.displayName,email:res.user.email,role:'student'}
             axios.post(`${import.meta.env.VITE_mainURL}/user`,saveUser)
             .then(res=>{
                 console.log(res.data);

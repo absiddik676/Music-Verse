@@ -10,11 +10,13 @@ import { FiUsers, FiSettings } from 'react-icons/fi';
 import { IoIosAdd } from 'react-icons/io';
 import { FaGraduationCap ,   } from 'react-icons/fa';
 import { BsPeopleFill } from 'react-icons/bs';
+import useAdmin from '../hook/useAdmin';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext)
-
-    const isAdmin = true;
+    const [isAdmin,isLoading] = useAdmin()
+    // const isAdmin = true;
+    console.log(isAdmin);
     const isInstructor = false
     const isStudent = false
     return (
