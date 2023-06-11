@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
-import { AuthContext } from '../../../../provider/AuthProvider';
 import { RiRefreshLine } from 'react-icons/ri';
 import axios from 'axios';
+import { AuthContext } from '../../../../Provider/AuthProvider';
 
 const MyClasses = () => {
     const { user, loading } = useContext(AuthContext)

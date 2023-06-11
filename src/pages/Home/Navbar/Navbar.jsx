@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../provider/AuthProvider';
+
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
 import useAdmin from '../../../hook/useAdmin';
 import useInstructor from '../../../hook/useInstructor';
 import useStudent from '../../../hook/useStudent';
+import { AuthContext } from '../../../Provider/AuthProvider';
 const Navbar = () => {
     const { user, logOut, loading } = useContext(AuthContext);
     const handleLogout = () => {

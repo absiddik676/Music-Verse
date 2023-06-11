@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { AuthContext } from '../../../../provider/AuthProvider';
 import SingleSelectedClass from '../SingleSelectedClass/SingleSelectedClass';
+import { AuthContext } from '../../../../Provider/AuthProvider';
 
 const MySelectedClasses = () => {
     const { user, loading } = useContext(AuthContext)

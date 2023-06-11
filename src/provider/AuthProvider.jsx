@@ -29,6 +29,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const signInWithGoogle = () => {
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
@@ -39,8 +40,6 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log('current user', currentUser);
-            
             if (currentUser) {
                 console.log('inside');
                 axios.post(`${import.meta.env.VITE_mainURL}/jwt`,{email:currentUser.email})
@@ -50,9 +49,11 @@ const AuthProvider = ({ children }) => {
                     setLoading(false)
                 })
             }
+            
             else{
                 localStorage.removeItem('access-token')
             }
+            setLoading(false)
         });
         return () => {
             return unSubscribe();

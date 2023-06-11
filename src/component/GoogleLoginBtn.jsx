@@ -1,9 +1,13 @@
 import React, { useContext } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
+import { AuthContext } from '../Provider/AuthProvider';
+import { useLocation, useNavigate } from 'react-router-dom';
 const GoogleLoginBtn = () => {
     const {signInWithGoogle} = useContext(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation();
+    const formLocation = location.state?.form?.pathname || '/';
     const handelGoogleLogin = () =>{
         signInWithGoogle()
         .then(res => {
@@ -11,6 +15,7 @@ const GoogleLoginBtn = () => {
             axios.post(`${import.meta.env.VITE_mainURL}/user`,saveUser)
             .then(res=>{
                 console.log(res.data);
+                navigate(formLocation, { replace: true });
             })
         })
         .catch(error =>{

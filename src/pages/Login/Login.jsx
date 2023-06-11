@@ -4,13 +4,16 @@ import lottie from 'lottie-web';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../provider/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const Login = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const { loginUser } = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const formLocation = location.state?.form?.pathname || '/';
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
@@ -41,6 +44,7 @@ const Login = () => {
             .then(result => {
                 console.log(result.user);
                 reset()
+                navigate(formLocation, { replace: true });
             })
             .catch(error => {
                 console.log(error.message);

@@ -4,7 +4,6 @@ import { FaBook } from 'react-icons/fa';
 import { BsCheckCircle } from 'react-icons/bs';
 import { RiHistoryFill } from 'react-icons/ri';
 import { AiOutlineHome } from 'react-icons/ai';
-import { AuthContext } from '../provider/AuthProvider';
 import { TfiBlackboard } from "react-icons/tfi";
 import { FiUsers, FiSettings } from 'react-icons/fi';
 import { IoIosAdd } from 'react-icons/io';
@@ -13,6 +12,7 @@ import { BsPeopleFill } from 'react-icons/bs';
 import useAdmin from '../hook/useAdmin';
 import useStudent from '../hook/useStudent';
 import useInstructor from '../hook/useInstructor';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext)

@@ -5,8 +5,8 @@ import animationData from '../../assets/img/88567-music.json';
 import { Link } from 'react-router-dom';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 import { useForm } from "react-hook-form";
-import { AuthContext } from '../../provider/AuthProvider';
 import axios from 'axios';
+import { AuthContext } from '../../Provider/AuthProvider';
 const SignUp = () => {
     const {createUser,addUserNameAndPhoto} = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState('');

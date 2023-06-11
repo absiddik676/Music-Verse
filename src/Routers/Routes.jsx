@@ -13,7 +13,6 @@ import ManageUser from "../pages/Dashboard/Admin/ManageUser/ManageUser";
 import ManageClasses from "../pages/Dashboard/Admin/ManageClasses/ManageClasses";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
-import Instructor from "./InstructorRoute";
 import InstructorRoute from "./InstructorRoute";
 
 
@@ -68,7 +67,7 @@ const router = createBrowserRouter([
     },
     {
       path:'test',
-      element:<Test/>
+      element:<PrivateRoute><Test/></PrivateRoute>
     }
   ]);
   export default router;

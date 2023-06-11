@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../../../provider/AuthProvider';
+import { AuthContext } from '../../../../Provider/AuthProvider';
 const Test = () => {
     const { user } = useContext(AuthContext);
     const {
