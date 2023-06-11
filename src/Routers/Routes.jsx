@@ -14,6 +14,7 @@ import ManageClasses from "../pages/Dashboard/Admin/ManageClasses/ManageClasses"
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import InstructorRoute from "./InstructorRoute";
+import Pay from "../pages/Dashboard/Student/Pay/Pay";
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
         {
           path:'/dashboard/selected',
           element:<PrivateRoute><MySelectedClasses/></PrivateRoute>
+        },
+        {
+          path:'/dashboard/pay/:id',
+          element:<PrivateRoute><Pay/></PrivateRoute>,
+          loader:({params})=>fetch(`${import.meta.env.VITE_mainURL}/payment-class/${params.id}`),
         },
         {
           path:'/dashboard/addaClass',

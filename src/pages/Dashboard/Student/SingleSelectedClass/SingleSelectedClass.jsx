@@ -3,8 +3,9 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 import { FaCreditCard } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-const SingleSelectedClass = ({myClass,refetch}) => {
-    const handelDeleteClass = id =>{
+import { Link } from 'react-router-dom';
+const SingleSelectedClass = ({ myClass, refetch }) => {
+    const handelDeleteClass = id => {
         console.log(id);
         Swal.fire({
             title: 'Are you sure?',
@@ -14,21 +15,21 @@ const SingleSelectedClass = ({myClass,refetch}) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`${import.meta.env.VITE_mainURL}/selected-class/${id}`)
-                .then(res=>{
-                    refetch()
-                    if(res.data.deletedCount>0){
-                        Swal.fire(
+                    .then(res => {
+                        refetch()
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire(
                                 'Deleted!',
                                 'Your class has been deleted.',
                                 'success'
-                              )
-                    }
-                })
+                            )
+                        }
+                    })
             }
-          })
+        })
     }
     console.log(myClass);
     return (
@@ -40,18 +41,16 @@ const SingleSelectedClass = ({myClass,refetch}) => {
                     <h2 className="card-title">Price: ${myClass.price}</h2>
 
                     <div className="card-actions justify-between">
-                    <button 
-                            type="button"
-                            className="px-3 py-2 mt-7 bg-yellow-500 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex"
-                        >
-                            <span className="ml-2"><span className='flex items-center gap-2'><FaCreditCard size={'20'}/> Pay now</span></span>
-                        </button>
-                        <button 
-                            onClick={()=>handelDeleteClass(myClass._id)}
+                        <Link className="px-3 py-2 mt-7 bg-yellow-500 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex"
+                         to={`/dashboard/pay/${myClass._id}`}>
+                        <span className="ml-2"><span className='flex items-center gap-2'><FaCreditCard size={'20'}/> Pay now</span></span>
+                        </Link>
+                        <button
+                            onClick={() => handelDeleteClass(myClass._id)}
                             type="button"
                             className="px-3 py-2 mt-7 bg-red-500 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex"
                         >
-                            <span className="ml-2"><span className='flex items-center gap-2'><RiDeleteBin2Line size={'20'}/> Delete</span></span>
+                            <span className="ml-2"><span className='flex items-center gap-2'><RiDeleteBin2Line size={'20'} /> Delete</span></span>
                         </button>
                     </div>
                 </div>
