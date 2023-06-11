@@ -34,7 +34,7 @@ const SingleSelectedClass = ({myClass,refetch}) => {
     return (
         <div className='mx-5'>
             <div className="card w-full bg-base-100 ">
-                <figure><img src={myClass.image} alt="Shoes" /></figure>
+                <figure><img className='h-52' src={myClass.image} alt="Shoes" /></figure>
                 <div className="card-body p-5 hover:shadow-md ">
                     <h2 className="card-title">Name: {myClass.name}</h2>
                     <h2 className="card-title">Price: ${myClass.price}</h2>

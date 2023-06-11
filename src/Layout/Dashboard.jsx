@@ -19,12 +19,6 @@ const Dashboard = () => {
     const [isAdmin,isAdminLoading] = useAdmin();
     const [isInstructor,isInstructorLoading] = useInstructor();
     const [isStudent,isStudentLoading] = useStudent();
-
-    console.log({isAdmin});
-    console.log({isInstructor});
-    console.log({isStudent});
-    // const isInstructor = false
-    // const isStudent = false
     return (
         <div>
             <div>
@@ -52,7 +46,7 @@ const Dashboard = () => {
                             {/* Sidebar content here */}
                             {
                                 isAdmin && <>
-                                <NavLink to='/dashboard/addaClass' className='mb-3'><span className='flex items-center'><FiSettings   className="mr-2" size={'24'} />Manage Classes</span></NavLink>
+                                <NavLink to='/dashboard/ManageClasses' className='mb-3'><span className='flex items-center'><FiSettings   className="mr-2" size={'24'} />Manage Classes</span></NavLink>
                                 <NavLink to='/dashboard/ManageUser'><span className='flex items-center'><BsPeopleFill    className="mr-2" size={'24'} />Manage Users</span></NavLink>
                                 </>
                             }

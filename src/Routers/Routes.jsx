@@ -10,6 +10,7 @@ import AddaClass from "../pages/Dashboard/Instrator/AddaClass/AddaClass";
 import Test from "../pages/Dashboard/Instrator/AddaClass/test";
 import MyClasses from "../pages/Dashboard/Instrator/MyClasses/MyClasses";
 import ManageUser from "../pages/Dashboard/Admin/ManageUser/ManageUser";
+import ManageClasses from "../pages/Dashboard/Admin/ManageClasses/ManageClasses";
 
 
 const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         {
           path:'/dashboard/ManageUser',
           element:<ManageUser/> // admin page
+        },
+        {
+          path:'/dashboard/ManageClasses',
+          element:<ManageClasses/> // admin page
         },
       ]
     },

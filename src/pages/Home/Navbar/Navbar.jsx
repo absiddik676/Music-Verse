@@ -6,7 +6,7 @@ import useAdmin from '../../../hook/useAdmin';
 import useInstructor from '../../../hook/useInstructor';
 import useStudent from '../../../hook/useStudent';
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut, loading } = useContext(AuthContext);
     const handleLogout = () => {
         logOut()
             .then(() => { })
@@ -39,7 +39,9 @@ const Navbar = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link>Instructors</Link></li>
                         <li><Link to='/classes'>Classes</Link></li>
-                        {user?<li><Link to={`/dashboard/${isAdmin && 'ManageUser' || isInstructor && 'myClasses' || isStudent && 'selected'}`}>Dashboard </Link></li>:''}
+                        {
+                            loading ? ' ' : <>{user?<li><Link to={`/dashboard/${isAdmin && 'ManageUser' || isInstructor && 'myClasses' || isStudent && 'selected'}`}>Dashboard </Link></li>:''}</>
+                        }
                     </ul>
                 </div>
                 <div className="navbar-end">
