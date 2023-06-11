@@ -11,6 +11,10 @@ import Test from "../pages/Dashboard/Instrator/AddaClass/test";
 import MyClasses from "../pages/Dashboard/Instrator/MyClasses/MyClasses";
 import ManageUser from "../pages/Dashboard/Admin/ManageUser/ManageUser";
 import ManageClasses from "../pages/Dashboard/Admin/ManageClasses/ManageClasses";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import Instructor from "./InstructorRoute";
+import InstructorRoute from "./InstructorRoute";
 
 
 const router = createBrowserRouter([
@@ -38,27 +42,27 @@ const router = createBrowserRouter([
     },
     {
       path:'dashboard',
-      element:<Dashboard/>,
+      element:<PrivateRoute><Dashboard/></PrivateRoute>,
       children:[
         {
           path:'/dashboard/selected',
-          element:<MySelectedClasses/>
+          element:<PrivateRoute><MySelectedClasses/></PrivateRoute>
         },
         {
           path:'/dashboard/addaClass',
-          element:<AddaClass/> // instructor page
+          element:<InstructorRoute><AddaClass/></InstructorRoute> // instructor page
         },
         {
           path:'/dashboard/myClasses',
-          element:<MyClasses/> // instructor page
+          element:<InstructorRoute><MyClasses/></InstructorRoute> // instructor page
         },
         {
           path:'/dashboard/ManageUser',
-          element:<ManageUser/> // admin page
+          element:<AdminRoute><ManageUser/></AdminRoute> // admin page
         },
         {
           path:'/dashboard/ManageClasses',
-          element:<ManageClasses/> // admin page
+          element:<AdminRoute><ManageClasses/></AdminRoute> // admin page
         },
       ]
     },

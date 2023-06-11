@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
 import { useToasts } from 'react-toast-notifications';
-
 const ManageClasses = () => {
     const { addToast, toastStack } = useToasts();
     const { data: classes = [], refetch } = useQuery({
@@ -13,32 +12,35 @@ const ManageClasses = () => {
         }
     })
 
-    const handleApproveClass  = async (id) =>{
+    const handleApproveClass = async (id) => {
         console.log(id);
         const res = await axios.patch(`${import.meta.env.VITE_mainURL}/approve-class/${id}`)
         console.log(res.data.result);
-        if(res.data.result.modifiedCount > 0){
+        if (res.data.result.modifiedCount > 0) {
             refetch()
             addToast(`${res.data.message} `, { appearance: 'success', autoDismiss: true, });
         }
     }
 
-    const handelDenyClasses = async(id) =>{
+    const handelDenyClasses = async (id) => {
         console.log(id);
         const res = await axios.patch(`${import.meta.env.VITE_mainURL}/denied-class/${id}`)
         console.log(res.data.result);
-        if(res.data.result.modifiedCount > 0){
+        if (res.data.result.modifiedCount > 0) {
             refetch()
             addToast(`${res.data.message} `, { appearance: 'success', autoDismiss: true, });
         }
     }
     return (
         <div>
-            <h1 className='text-3xl font-semibold text-center my-4'>Manage all classes</h1>
+            <div className='flex justify-between mx-4'>
+                <h1 className='text-3xl font-semibold text-center my-4'>Manage all classes</h1>
+                <h1 className='text-3xl font-semibold text-center my-4'>Total classes: {classes.length}</h1>
+            </div>
             <div className="overflow-x-auto">
                 <div className="overflow-x-auto">
                     <table className="table">
-                        
+
                         <thead>
                             <tr>
                                 <th>Class Image</th>
@@ -83,12 +85,12 @@ const ManageClasses = () => {
                                         {singleClass?.status}
                                     </th>
                                     <th>
-                                <button  onClick={()=>handleApproveClass(singleClass._id)} className={`bg-green-500  hover:bg-green-600 text-white font-bold py-2 px-2 rounded ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-green-400' : ''}`}>
-                                    Approve
-                                </button>
+                                        <button onClick={() => handleApproveClass(singleClass._id)} className={`bg-green-500  hover:bg-green-600 text-white font-bold py-2 px-2 rounded ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-green-400' : ''}`}>
+                                            Approve
+                                        </button>
                                     </th>
                                     <th>
-                                        <button onClick={()=>handelDenyClasses(singleClass._id)} className={`bg-red-500 ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-red-400' : ''} hover:bg-red-600 text-white font-bold py-2 px-2 rounded`}>
+                                        <button onClick={() => handelDenyClasses(singleClass._id)} className={`bg-red-500 ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-red-400' : ''} hover:bg-red-600 text-white font-bold py-2 px-2 rounded`}>
                                             Deny
                                         </button>
                                     </th>
@@ -105,6 +107,7 @@ const ManageClasses = () => {
                     </table>
                 </div>
             </div>
+           
         </div>
     );
 };
