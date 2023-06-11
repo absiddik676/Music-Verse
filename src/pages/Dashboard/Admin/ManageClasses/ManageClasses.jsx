@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
+import { useToasts } from 'react-toast-notifications';
 
 const ManageClasses = () => {
+    const { addToast, toastStack } = useToasts();
     const { data: classes = [], refetch } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
@@ -10,14 +12,33 @@ const ManageClasses = () => {
             return res.data
         }
     })
-    console.log(classes);
+
+    const handleApproveClass  = async (id) =>{
+        console.log(id);
+        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/approve-class/${id}`)
+        console.log(res.data.result);
+        if(res.data.result.modifiedCount > 0){
+            refetch()
+            addToast(`${res.data.message} `, { appearance: 'success', autoDismiss: true, });
+        }
+    }
+
+    const handelDenyClasses = async(id) =>{
+        console.log(id);
+        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/denied-class/${id}`)
+        console.log(res.data.result);
+        if(res.data.result.modifiedCount > 0){
+            refetch()
+            addToast(`${res.data.message} `, { appearance: 'success', autoDismiss: true, });
+        }
+    }
     return (
         <div>
             <h1 className='text-3xl font-semibold text-center my-4'>Manage all classes</h1>
             <div className="overflow-x-auto">
                 <div className="overflow-x-auto">
                     <table className="table">
-                        {/* head */}
+                        
                         <thead>
                             <tr>
                                 <th>Class Image</th>
@@ -35,43 +56,44 @@ const ManageClasses = () => {
                         <tbody>
                             {
                                 classes.map(singleClass => <tr key={singleClass._id}>
+                                    {console.log(singleClass?.status === 'approve')}
                                     <td>
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle w-12 h-12">
-                                                    <img src={singleClass.imgURL} alt="Avatar Tailwind CSS Component" />
+                                                    <img src={singleClass?.imgURL} alt="Avatar Tailwind CSS Component" />
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        {singleClass.className}
+                                        {singleClass?.className}
                                     </td>
-                                    <td>{singleClass.InstructorName}</td>
+                                    <td>{singleClass?.InstructorName}</td>
                                     <th>
-                                        {singleClass.InstructorEmail}
+                                        {singleClass?.InstructorEmail}
                                     </th>
                                     <th>
-                                        {singleClass.AvailableSeats}
+                                        {singleClass?.AvailableSeats}
                                     </th>
                                     <th>
-                                        ${singleClass.price}
+                                        ${singleClass?.price}
                                     </th>
                                     <th>
-                                        {singleClass.status}
+                                        {singleClass?.status}
                                     </th>
                                     <th>
-                                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-2 rounded">
-                                            Approve
-                                        </button>
+                                <button  onClick={()=>handleApproveClass(singleClass._id)} className={`bg-green-500  hover:bg-green-600 text-white font-bold py-2 px-2 rounded ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-green-400' : ''}`}>
+                                    Approve
+                                </button>
                                     </th>
                                     <th>
-                                        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-2 rounded">
+                                        <button onClick={()=>handelDenyClasses(singleClass._id)} className={`bg-red-500 ${singleClass.status === 'approve' || singleClass.status === 'denied' ? 'btn-disabled cursor-not-allowed bg-red-400' : ''} hover:bg-red-600 text-white font-bold py-2 px-2 rounded`}>
                                             Deny
                                         </button>
                                     </th>
                                     <th>
-                                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded">
+                                        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded">
                                             Feedback
                                         </button>
                                     </th>
