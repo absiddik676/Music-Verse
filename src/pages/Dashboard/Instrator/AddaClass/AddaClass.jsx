@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../../../provider/AuthProvider';
 import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
+import { AuthContext } from '../../../../Provider/AuthProvider';
 const VITE_IMGBB_TOKEN = import.meta.env.VITE_IMGBB_TOKEN
 const AddaClass = () => {
     const {user} = useContext(AuthContext)

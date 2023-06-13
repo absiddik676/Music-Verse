@@ -1,10 +1,25 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
-import './PayForm.css'
-const PayForm = () => {
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../../../../Provider/AuthProvider';
+const PayForm = ({ data }) => {
+   const {user} = useContext(AuthContext)
+   console.log(user);
     const stripe = useStripe();
     const elements = useElements();
-    const [paymentError,setPaymentError] = useState('')
+    const [paymentError, setPaymentError] = useState('')
+    const [paymentSuccess, setPaymentSuccess] = useState('')
+    const [clientSecret, setClientSecret] = useState("");
+    const [Processing , setProcessing] = useState(false)
+    const price = data.price;
+    console.log(data);
+    useEffect(()=>{
+        axios.post(`${import.meta.env.VITE_mainURL}/create-payment-intent`,{price})
+        .then(res =>{
+            console.log(res.data.clientSecret);
+            setClientSecret(res.data.clientSecret)
+        })
+    },[price,axios])
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -30,11 +45,54 @@ const PayForm = () => {
             console.log('[PaymentMethod]', paymentMethod);
         }
 
+        setProcessing(true)
+
+        const {paymentIntent, error:confirmError} = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: {
+                card: elements.getElement(CardElement),
+                billing_details: {
+                  name: user?.displayName || 'unknown',
+                  email: user?.email || 'anonymous',
+                },
+              },
+            },
+            
+          );
+          if(confirmError){
+                console.log(confirmError);
+                setPaymentError(confirmError.message)
+          }
+
+          console.log(paymentIntent);
+          setProcessing(false)
+          if(paymentIntent?.status === "succeeded"){
+            const transactionId = paymentIntent.id;
+            setPaymentSuccess(transactionId,)
+            const paymentData = {
+                email: user?.email,
+                transactionId: paymentIntent.id,
+                price,
+                date: new Date(),
+                name:data.name,
+                CoursesId:data._id
+            }
+
+            axios.post(`${import.meta.env.VITE_mainURL}/payment-history`,paymentData)
+            .then(res =>{
+                console.log(res.data);
+            })
+
+            axios.delete(`${import.meta.env.VITE_mainURL}/selected-class/${data._id}`)
+            console.log(payment);
+          }
+
     };
     return (
         <div>
             <>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
                     <CardElement
                         options={{
                             style: {
@@ -50,11 +108,19 @@ const PayForm = () => {
                                 },
                             },
                         }}
+                        className="p-2 border border-gray-300 rounded"
                     />
-                    <button type="submit" disabled={!stripe}>
+                    <button
+                        type="submit"
+                        disabled={!stripe || !clientSecret || Processing}
+                        className="mt-4 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    >
                         Pay
                     </button>
                 </form>
+                    
+                    {paymentError && <p className='text-red-500 text-center'>{paymentError}</p>}
+                    {paymentSuccess && <p className='text-green-500 text-center'>Transaction  complete with transactionId {paymentSuccess}</p>}
             </>
         </div>
     );
