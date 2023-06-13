@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 const PayForm = ({ data }) => {
+    console.log(data);
     const { user } = useContext(AuthContext)
     console.log(user);
     const stripe = useStripe();
@@ -13,11 +14,13 @@ const PayForm = ({ data }) => {
     const [Processing, setProcessing] = useState(false)
     const price = data.price;
     useEffect(() => {
+       if(data.price > 0){
         axios.post(`${import.meta.env.VITE_mainURL}/create-payment-intent`, { price })
-            .then(res => {
-                console.log(res.data.clientSecret);
-                setClientSecret(res.data.clientSecret)
-            })
+        .then(res => {
+            console.log(res.data.clientSecret);
+            setClientSecret(res.data.clientSecret)
+        })
+       }
     }, [price, axios])
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -87,7 +90,12 @@ const PayForm = ({ data }) => {
 
             axios.post(`${import.meta.env.VITE_mainURL}/enrolled-data`,data)
             .then(res =>{
-                console.log('ssidd',res.data);
+                console.log(res.data);
+            })
+
+            axios.patch(`${import.meta.env.VITE_mainURL}/enrolled-student-count/${data.classId}`)
+            .then(res=>{
+                console.log(res);
             })
         }
 
