@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
@@ -8,6 +8,7 @@ import useStudent from '../../../hook/useStudent';
 import { AuthContext } from '../../../Provider/AuthProvider';
 const Navbar = () => {
     const { user, logOut, loading } = useContext(AuthContext);
+    const [isStudent,setIsStudent] = useState();
     const handleLogout = () => {
         logOut()
             .then(() => { })
@@ -15,9 +16,17 @@ const Navbar = () => {
                 console.log(error);
             })
     }
+    useEffect(()=>{
+        fetch(`${import.meta.env.VITE_mainURL}/user/student/${user?.email}`)
+        .then(res => res.json())
+        .then(data=> {
+            setIsStudent(data)
+        })
+    },[user])
     const [isAdmin,isAdminLoading] = useAdmin();
     const [isInstructor,isInstructorLoading] = useInstructor();
-    const [isStudent,isStudentLoading] = useStudent();
+    
+    console.log(isStudent);
     return (
         <div className='max-w-7xl mx-auto '>
             <div className="navbar max-w-7xl bg-transparent z-50 fixed ">

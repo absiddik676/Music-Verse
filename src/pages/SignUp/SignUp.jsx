@@ -50,6 +50,15 @@ const SignUp = () => {
                 console.log(res.data);
             })
             navigate(formLocation, { replace: true });
+            useEffect(() => {
+                const reloadTimeout = setTimeout(() => {
+                  window.location.reload(); // Reload the page
+                }, 3000); // Wait for 3 seconds (adjust the duration as needed)
+            
+                return () => {
+                  clearTimeout(reloadTimeout); // Clear the timeout if the component is unmounted
+                };
+              }, []);
         })
         .catch(error =>{
             console.log(error.message);

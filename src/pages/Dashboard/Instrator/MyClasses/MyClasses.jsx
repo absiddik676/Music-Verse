@@ -38,7 +38,7 @@ const MyClasses = () => {
                                 <th>{index + 1}</th>
                                 <td>{myClass.className}</td>
                                 <td>{myClass.price}</td>
-                                <td >{myClass.totalEnrolled ? myClass.totalEnrolled : 0}</td>
+                                <td >{myClass.enrolledStudentNumber ? myClass.enrolledStudentNumber : 0}</td>
                                 <td>{myClass.status}</td>
                                 <td><button
                                     className="flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"

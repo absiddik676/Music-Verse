@@ -93,7 +93,11 @@ const PayForm = ({ data }) => {
                 console.log(res.data);
             })
 
-            axios.patch(`${import.meta.env.VITE_mainURL}/enrolled-student-count/${data.classId}`)
+            axios.patch(`${import.meta.env.VITE_mainURL}/available-student-count/${data.classId}`)
+            .then(res=>{
+                console.log(res);
+            })
+            axios.put(`${import.meta.env.VITE_mainURL}/enrolled-student-count/${data.classId}`)
             .then(res=>{
                 console.log(res);
             })
