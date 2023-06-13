@@ -3,23 +3,22 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 const PayForm = ({ data }) => {
-   const {user} = useContext(AuthContext)
-   console.log(user);
+    const { user } = useContext(AuthContext)
+    console.log(user);
     const stripe = useStripe();
     const elements = useElements();
     const [paymentError, setPaymentError] = useState('')
     const [paymentSuccess, setPaymentSuccess] = useState('')
     const [clientSecret, setClientSecret] = useState("");
-    const [Processing , setProcessing] = useState(false)
+    const [Processing, setProcessing] = useState(false)
     const price = data.price;
-    console.log(data);
-    useEffect(()=>{
-        axios.post(`${import.meta.env.VITE_mainURL}/create-payment-intent`,{price})
-        .then(res =>{
-            console.log(res.data.clientSecret);
-            setClientSecret(res.data.clientSecret)
-        })
-    },[price,axios])
+    useEffect(() => {
+        axios.post(`${import.meta.env.VITE_mainURL}/create-payment-intent`, { price })
+            .then(res => {
+                console.log(res.data.clientSecret);
+                setClientSecret(res.data.clientSecret)
+            })
+    }, [price, axios])
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -47,27 +46,27 @@ const PayForm = ({ data }) => {
 
         setProcessing(true)
 
-        const {paymentIntent, error:confirmError} = await stripe.confirmCardPayment(
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
             clientSecret,
             {
-              payment_method: {
-                card: elements.getElement(CardElement),
-                billing_details: {
-                  name: user?.displayName || 'unknown',
-                  email: user?.email || 'anonymous',
+                payment_method: {
+                    card: elements.getElement(CardElement),
+                    billing_details: {
+                        name: user?.displayName || 'unknown',
+                        email: user?.email || 'anonymous',
+                    },
                 },
-              },
             },
-            
-          );
-          if(confirmError){
-                console.log(confirmError);
-                setPaymentError(confirmError.message)
-          }
 
-          console.log(paymentIntent);
-          setProcessing(false)
-          if(paymentIntent?.status === "succeeded"){
+        );
+        if (confirmError) {
+            console.log(confirmError);
+            setPaymentError(confirmError.message)
+        }
+
+        console.log(paymentIntent);
+        setProcessing(false)
+        if (paymentIntent?.status === "succeeded") {
             const transactionId = paymentIntent.id;
             setPaymentSuccess(transactionId,)
             const paymentData = {
@@ -75,18 +74,24 @@ const PayForm = ({ data }) => {
                 transactionId: paymentIntent.id,
                 price,
                 date: new Date(),
-                name:data.name,
-                CoursesId:data._id
+                name: data.name,
+                CoursesId: data._id
             }
 
-            axios.post(`${import.meta.env.VITE_mainURL}/payment-history`,paymentData)
-            .then(res =>{
-                console.log(res.data);
-            })
+            axios.post(`${import.meta.env.VITE_mainURL}/payment-history`, paymentData)
+                .then(res => {
+                    console.log(res.data);
+                })
 
             axios.delete(`${import.meta.env.VITE_mainURL}/selected-class/${data._id}`)
-            console.log(payment);
-          }
+
+            axios.post(`${import.meta.env.VITE_mainURL}/enrolled-data`,data)
+            .then(res =>{
+                console.log('ssidd',res.data);
+            })
+        }
+
+
 
     };
     return (
@@ -118,9 +123,9 @@ const PayForm = ({ data }) => {
                         Pay
                     </button>
                 </form>
-                    
-                    {paymentError && <p className='text-red-500 text-center'>{paymentError}</p>}
-                    {paymentSuccess && <p className='text-green-500 text-center'>Transaction  complete with transactionId {paymentSuccess}</p>}
+
+                {paymentError && <p className='text-red-500 text-center'>{paymentError}</p>}
+                {paymentSuccess && <p className='text-green-500 text-center'>Transaction  complete with transactionId {paymentSuccess}</p>}
             </>
         </div>
     );

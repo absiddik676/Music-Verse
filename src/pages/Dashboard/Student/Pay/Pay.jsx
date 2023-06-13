@@ -7,7 +7,7 @@ import { Elements } from '@stripe/react-stripe-js';
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_key);
 const Pay = () => {
     const data = useLoaderData();
-    console.log(data._id);
+    console.log(data);
     return (
         <div>
             <h1>Payment</h1>

@@ -11,7 +11,7 @@ const SingleClass = ({ singleClass }) => {
     const [isAdmin, isAdminLoading] = useAdmin()
     const [isInstructor, isInstructorLoading] = useInstructor()
     const handelSelectClass = (classes) => {
-        const selectedClass = { classId: classes._id, name: classes.className, price: classes.price, studentEmail: user?.email, image: classes.imgURL }
+        const selectedClass = { classId: classes._id, name: classes.className, price: classes.price, studentEmail: user?.email, image: classes.imgURL,InstructorName:classes.InstructorName }
 
         axios.post(`${import.meta.env.VITE_mainURL}/selected-class`, selectedClass)
             .then(res => {
