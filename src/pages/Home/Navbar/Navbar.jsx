@@ -19,7 +19,7 @@ const Navbar = () => {
     const [isInstructor,isInstructorLoading] = useInstructor();
     const [isStudent,isStudentLoading] = useStudent();
     return (
-        <div className='max-w-7xl mx-auto'>
+        <div className='max-w-7xl mx-auto '>
             <div className="navbar max-w-7xl bg-transparent z-50 fixed ">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -28,7 +28,7 @@ const Navbar = () => {
                         </label>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                             <li><Link to='/'>Home</Link></li>
-                            <li><Link>Instructors</Link></li>
+                            <li><Link to='/instructor'>Instructors</Link></li>
                             <li><Link to='/classes'>Classes</Link></li>
                             {user?<li><Link>Dashboard </Link></li>:''}
                         </ul>
@@ -38,7 +38,7 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         <li><Link to='/'>Home</Link></li>
-                        <li><Link>Instructors</Link></li>
+                        <li><Link to='/instructor'>Instructors</Link></li>
                         <li><Link to='/classes'>Classes</Link></li>
                         {
                             loading ? ' ' : <>{user?<li><Link to={`/dashboard/${isAdmin && 'ManageUser' || isInstructor && 'myClasses' || isStudent && 'selected'}`}>Dashboard </Link></li>:''}</>

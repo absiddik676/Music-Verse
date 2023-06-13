@@ -66,7 +66,7 @@ const Dashboard = () => {
                             <div className="divider bg-white h-[2px]"></div>
                             <NavLink to='/'><span className='flex items-center'><AiOutlineHome className="mr-2" size={'24'} />Home</span> </NavLink>
                             <NavLink to='/classes' className='py-3'><span className='flex items-center'><TfiBlackboard size={'24'} className="mr-2" />Classes</span> </NavLink>
-                            <NavLink to='/classes'><span className='flex items-center'><FiUsers className="mr-2" size={'24 '} />Instructors</span> </NavLink>
+                            <NavLink to='/instructor'><span className='flex items-center'><FiUsers className="mr-2" size={'24 '} />Instructors</span> </NavLink>
                         </ul>
 
                     </div>

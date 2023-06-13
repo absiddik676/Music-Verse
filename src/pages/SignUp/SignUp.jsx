@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import lottie from 'lottie-web';
 import animationData from '../../assets/img/88567-music.json';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLoginBtn from '../../component/GoogleLoginBtn';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
@@ -10,6 +10,9 @@ import { AuthContext } from '../../Provider/AuthProvider';
 const SignUp = () => {
     const {createUser,addUserNameAndPhoto} = useContext(AuthContext);
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const formLocation = location.state?.form?.pathname || '/';
     const LottieAnimation = () => {
         const animationContainer = useRef(null);
         useEffect(() => {
@@ -41,11 +44,12 @@ const SignUp = () => {
             console.log(result.user);
             addUserNameAndPhoto(data.name, data.photoURL);
             reset()
-            const saveUser = { name: data.name, email: data.email, phoneNumber:data.phoneNumber,gender:data.gender ,address:data.address, role:'student'}
+            const saveUser = { name: data.name, email: data.email, phoneNumber:data.phoneNumber,gender:data.gender ,address:data.address, role:'student',img:data.photoURL}
             axios.post(`${import.meta.env.VITE_mainURL}/user`,saveUser)
             .then(res=>{
                 console.log(res.data);
             })
+            navigate(formLocation, { replace: true });
         })
         .catch(error =>{
             console.log(error.message);
