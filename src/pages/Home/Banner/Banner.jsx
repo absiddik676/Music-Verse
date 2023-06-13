@@ -7,7 +7,7 @@ import BouncingMusicNode from '../../../component/AnimatedImage';
 
 const Banner = () => {
     return (
-        <div style={{ backgroundImage: `url(${bgImg})` }} className='bg-[#f8d9e8] bg-no-repeat bg-bottom pt-10 mb-60'>
+        <div style={{ backgroundImage: `url(${bgImg})` }} className='bg-[#f8d9e8] bg-no-repeat bg-bottom pt-10 mb-20'>
             <div className='mx-auto max-w-7xl bg-no-repeat relative pt-24 flex items-center justify-evenly'>
                 <div className='w-1/2 pb-32'>
                     <h3 className='text-2xl font-bold text-red-500'>ARE YOU LOOKING FOR</h3>

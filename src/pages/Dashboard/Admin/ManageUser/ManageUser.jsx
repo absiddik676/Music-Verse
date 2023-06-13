@@ -44,13 +44,14 @@ const ManageUser = () => {
                     <tbody>
                         {
                             users.map((user, index) => <tr key={user._id}>
+                                {console.log(user.role === 'instructor')}
                                 <th>{index + 1}</th>
                                 <td>{user?.name}</td>
                                 <td>{user?.email}</td>
                                 <td>{user?.role}</td>
                                 <td className='flex justify-center'>
                                     <button
-                                        className="flex text-xs items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        className={`flex text-xs items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-green-500 ${user.role === 'instructor' ? 'btn-disabled  bg-green-300':''}`}
                                         onClick={()=>handelMakeInstructor(user)}
                                     >
                                         <RiUserAddLine className="mr-2" />
@@ -60,7 +61,7 @@ const ManageUser = () => {
                                 <td >
                                    <div className='flex justify-center'>
                                    <button
-                                        className="flex text-xs items-center px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                        className={`flex text-xs items-center px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 ${user.role === 'admin' ?'btn-disabled bg-purple-300':''}`}
                                         onClick={()=>handelMakeAdmin(user)}
                                     >
                                         <RiAdminLine className="mr-2" />

@@ -10,7 +10,7 @@ const Pay = () => {
     console.log(data);
     return (
         <div>
-            <h1>Payment</h1>
+            <h1 className='text-3xl font-semibold text-center my-4'>Payment</h1>
             
             <Elements stripe={stripePromise}>
                 <PayForm data={data}/>
