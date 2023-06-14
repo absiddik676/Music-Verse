@@ -19,7 +19,7 @@ const Classes = () => {
     return (
         <div className='max-w-7xl  mx-auto pt-24'>
             {
-                isLoading ? <Spinner /> : <div className='grid grid-cols-3 gap-5'>
+                isLoading ? <Spinner /> : <div className='grid md:grid-cols-3 gap-5'>
                     {
                         classes.map(singleClass => <SingleClass key={singleClass._id} singleClass={singleClass} />)
                     }

@@ -3,11 +3,12 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 import useAxiosSecure from '../../../../hook/useAxiosSecure';
+import Spinner from '../../../../component/Spinner';
 
 const PaymentHistory = () => {
     const { user, loading } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
-    const { data: payData = [] } = useQuery({
+    const { data: payData = [], isLoading } = useQuery({
         queryKey: ['History'],
         enabled: !loading,
         queryFn: async () => {
@@ -19,12 +20,12 @@ const PaymentHistory = () => {
     return (
         <div>
             <h1 className='text-3xl font-semibold text-center my-4'>Payment history</h1>
-           
+
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     {/* head */}
                     <thead>
-                    <tr>
+                        <tr>
                             <th></th>
                             <th>Courses Name</th>
                             <th>Email</th>
@@ -34,19 +35,24 @@ const PaymentHistory = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {
-                            payData.map((data, index) =>
-                                <tr key={data._id} >
-                                    <th>{index + 1}</th>
-                                    <td>{data.name}</td>
-                                    <td>{data.email}</td>
-                                    <td>{data.price}</td>
-                                    <td>{data.transactionId}</td>
-                                    <td>{data.date}</td>
-                                </tr>
-                            )
+                        {
+                            isLoading ? <Spinner /> : <>
+                                {
+                                    payData.map((data, index) =>
+                                        <tr key={data._id} >
+                                            <th>{index + 1}</th>
+                                            <td>{data.name}</td>
+                                            <td>{data.email}</td>
+                                            <td>{data.price}</td>
+                                            <td>{data.transactionId}</td>
+                                            <td>{data.date}</td>
+                                        </tr>
+                                    )
+                                }
+                            </>
                         }
-                       
+
+
                     </tbody>
                 </table>
             </div>

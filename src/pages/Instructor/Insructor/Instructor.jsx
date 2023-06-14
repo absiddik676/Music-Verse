@@ -16,7 +16,7 @@ const Instructor = () => {
     return (
         <div className='max-w-7xl mx-auto'>
             {
-                isLoading ? <Spinner/> : <div className='pt-24 grid grid-cols-3 gap-5'>
+                isLoading ? <Spinner/> : <div className='pt-24 grid md:grid-cols-3 gap-5'>
                     {
                         instructorData.map(instructor => <SingleInstructor key={instructor._id} instructor={instructor}></SingleInstructor>)
                     }

@@ -4,11 +4,12 @@ import React, { useContext } from 'react';
 import SingleSelectedClass from '../SingleSelectedClass/SingleSelectedClass';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 import useAxiosSecure from '../../../../hook/useAxiosSecure';
+import Spinner from '../../../../component/Spinner';
 
 const MySelectedClasses = () => {
     const { user, loading } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
-    const { data: myClasses = [], refetch } = useQuery({
+    const { data: myClasses = [], refetch, isLoading } = useQuery({
         queryKey: ['selectedClass'],
         enabled: !loading,
         queryFn: async () => {
@@ -20,11 +21,14 @@ const MySelectedClasses = () => {
     return (
         <div>
             <h1 className='text-3xl font-semibold text-center my-3'>MySelectedClasses</h1>
-            <div className='grid grid-cols-3 gap-5'>
+            {
+                isLoading ? <Spinner/> : <div className='grid grid-cols-3 gap-5'>
                 {
                     myClasses.map(myClass => <SingleSelectedClass key={myClass._id} refetch={refetch} myClass={myClass}></SingleSelectedClass>)
                 }
             </div>
+            }
+            
         </div>
     );
 };

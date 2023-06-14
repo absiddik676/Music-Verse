@@ -32,7 +32,7 @@ const SinglePopularClasses = ({ classes }) => {
     }
     return (
 
-        <div  data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="600" className=" gap-5 space-y-4 md:space-y-0">
+        <div  data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="600" className=" gap-5 space-y-4 md:space-y-0 mb-10">
             <div className="max-w-sm relative bg-white px-6 pt-6 pb-2 h-[500px] rounded-xl shadow-lg transform  transition duration-500">
                 <h3 className="mb-3 text-xl font-bold text-indigo-600">{classes?.className}</h3>
                 <div className="relative">
@@ -42,15 +42,15 @@ const SinglePopularClasses = ({ classes }) => {
                 <h1 className="mt-4 text-gray-800 text-xl font-bold cursor-pointer">Instructor Name: {classes?.InstructorName}</h1>
                 <div className="my-4">
                     <div className="flex text-lg space-x-1 items-center">
-                        <FaChair size={24} />
+                        
                         <p className='font-semibold'>Available Site: {classes?.AvailableSeats}</p>
                     </div>
                     <div className="flex space-x-1 items-center">
-                        <AiOutlineDollarCircle size={24} />
+                        
                         <p className='text-lg font-semibold'>Price: ${classes?.price}</p>
                     </div>
                     <div className="flex space-x-1 items-center">
-                        <FaUsers size={24} />
+                        
                         <p className='text-lg font-semibold'>Enrolled Student: {classes?.enrolledStudentNumber}</p>
                     </div>
 

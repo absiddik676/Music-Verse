@@ -32,7 +32,7 @@ const SingleClass = ({ singleClass }) => {
     return (
         <div className='' data-aos="fade-up" data-aos-offset="20" data-aos-easing="ease-in-sine" data-aos-duration="600">
             <div className="card w-96 bg-base-100 ">
-                <figure><img className='h-52 rounded-t-lg' src={singleClass.imgURL} alt="Shoes" /></figure>
+                <figure><img className='w-72 md:w-full md:h-52 rounded-t-lg' src={singleClass.imgURL} alt="Shoes" /></figure>
                 <div className="card-body hover:shadow-md ">
                     <h2 className="card-title">{singleClass.className}</h2>
                     <h2 className='text-xl  '>Instructor name: {singleClass.InstructorName}</h2>

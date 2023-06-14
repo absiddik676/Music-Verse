@@ -17,7 +17,7 @@ const PayForm = ({ data }) => {
     const price = data.price;
     useEffect(() => {
        if(data.price > 0){
-        axios.post(`${import.meta.env.VITE_mainURL}/create-payment-intent`, { price })
+        axiosSecure.post(`/create-payment-intent`, { price })
         .then(res => {
             console.log(res.data.clientSecret);
             setClientSecret(res.data.clientSecret)
