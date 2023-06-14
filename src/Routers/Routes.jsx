@@ -17,6 +17,7 @@ import Pay from "../pages/Dashboard/Student/Pay/Pay";
 import PaymentHistory from "../pages/Dashboard/Student/PaymentHistory/PaymentHistory";
 import MyEnrolledClasses from "../pages/Dashboard/Student/MyEnrolledClasses/MyEnrolledClasses";
 import Instructor from "../pages/Instructor/Insructor/Instructor";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 
 const router = createBrowserRouter([
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
           element:<AdminRoute><ManageClasses/></AdminRoute> // admin page
         },
       ]
+    },
+    {
+      path:'*',
+      element:<ErrorPage/>
     }
   ]);
   export default router;
