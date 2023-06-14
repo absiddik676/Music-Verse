@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <div className=''>
-      <div className={`navbar mr-55 bg-transparent z-50 fixed ${navbarBg ? 'bg-gray-800 ' : ''}`}>
+      <div className={`navbar mr-55  z-50 fixed ${navbarBg ? 'bg-gray-800 ' : 'bg-transparent'}`}>
         <div className="navbar-start md:pl-20">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
