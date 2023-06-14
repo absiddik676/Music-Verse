@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../../../Provider/AuthProvider';
 import useAxiosSecure from '../../../../hook/useAxiosSecure';
 import Spinner from '../../../../component/Spinner';
-
+import moment from 'moment';
 const PaymentHistory = () => {
     const { user, loading } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
@@ -45,7 +45,7 @@ const PaymentHistory = () => {
                                             <td>{data.email}</td>
                                             <td>{data.price}</td>
                                             <td>{data.transactionId}</td>
-                                            <td>{data.date}</td>
+                                            <td>{moment(data?.date).format("yyyy-MM-D ")}</td>
                                         </tr>
                                     )
                                 }
