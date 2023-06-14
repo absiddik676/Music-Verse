@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
 const ManageClasses = () => {
     const { addToast, toastStack } = useToasts();
+    const [feedbackDataId, setFeedbackDataId] = useState('');
     const { data: classes = [], refetch } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
@@ -31,6 +32,25 @@ const ManageClasses = () => {
             addToast(`${res.data.message} `, { appearance: 'success', autoDismiss: true, });
         }
     }
+
+    const openModal = (id) => {
+        window.my_modal_1.showModal(feedbackDataId);
+        setFeedbackDataId(id)
+    };
+
+    const handleSendFeedback = (event) => {
+        const data = event.target.text.value;
+        console.log(feedbackDataId,data);
+        axios.put(`${import.meta.env.VITE_mainURL}/feedback/${feedbackDataId}`,{data})
+        .then(res=>{
+            console.log(res.data);
+            if(res.data.modifiedCount > 0){
+                addToast(`Feedback sended `, { appearance: 'success', autoDismiss: true, });
+            }
+        })
+        
+    };
+
     return (
         <div>
             <div className='flex justify-between mx-4'>
@@ -95,9 +115,10 @@ const ManageClasses = () => {
                                         </button>
                                     </th>
                                     <th>
-                                        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded">
+                                        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-2 rounded" onClick={()=>openModal(singleClass._id)}>
                                             Feedback
                                         </button>
+
                                     </th>
                                 </tr>)
                             }
@@ -107,7 +128,18 @@ const ManageClasses = () => {
                     </table>
                 </div>
             </div>
-           
+            {/* Open the modal using ID.showModal() method */}
+
+            <dialog id="my_modal_1" className="modal">
+                <form onSubmit={handleSendFeedback} method="dialog" className="modal-box">
+                    <h3 className="font-bold text-lg mb-2">Feedback!</h3>
+                    <textarea rows={'4'} cols={'62'} id='text' className="textarea  resize-none textarea-info " placeholder="Bio"></textarea>
+                    <div className="modal-action">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button type='submit' className="btn">Send</button>
+                    </div>
+                </form>
+            </dialog>
         </div>
     );
 };

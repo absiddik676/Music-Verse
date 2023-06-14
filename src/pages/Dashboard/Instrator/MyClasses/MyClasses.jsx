@@ -29,7 +29,7 @@ const MyClasses = () => {
                             <th>Total Enrolled</th>
                             <th>Status</th>
                             <th>Update </th>
-                            
+                            <th>Feedback</th>
                         </tr>
                     </thead>
                     <tbody>
