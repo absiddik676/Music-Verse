@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Banner from '../Banner/Banner';
 import PopularClasses from '../PopularClasses/PopularClasses';
 import BestInstructor from '../BestInstructor/BestInstructor';
+import AboutUs from '../AboutUs/AboutUs';
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
             <Banner/>
             <PopularClasses/>
             <BestInstructor/>
+            <AboutUs/>
         </div>
     );
 };

@@ -16,7 +16,7 @@ const PopularClasses = () => {
     })
     console.log({instructorLoading});
     return (
-        <div className={` ${isDarkMode?'bg-[#111111]':''}`}> 
+        <div className={` ${isDarkMode?'bg-[#1a1919]':''}`}> 
             <div className={`max-w-7xl mx-auto`}>
             <h1 className="text-4xl py-16 text-center font-bold bg-gradient-to-r from-[#ee9ca7] via-pink-500 to-[#ffdde1] text-transparent bg-clip-text">
             Popular Classes

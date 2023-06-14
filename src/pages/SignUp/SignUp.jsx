@@ -211,7 +211,7 @@ const SignUp = () => {
                                         autoComplete="url"
                                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                         placeholder="Photo URL"
-                                        {...register("photoURL", { required: true })}
+                                        {...register("photoURL", { required: false })}
                                     />
                                     {errors.photoURL?.type === 'required' && <p className='text-red-600'> Password is required </p>}
                                 </div>
