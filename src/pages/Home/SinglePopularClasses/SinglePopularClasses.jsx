@@ -6,12 +6,12 @@ import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import useAdmin from '../../../hook/useAdmin';
 import useInstructor from '../../../hook/useInstructor';
-import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import ClassCard from '../../../component/ClassCard';
-
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'
+AOS.init();
 
 const SinglePopularClasses = ({ classes }) => {
+    
     const { user } = useContext(AuthContext)
     const { addToast, toastStack } = useToasts();
     const [isAdmin, isAdminLoading] = useAdmin()
@@ -33,7 +33,7 @@ const SinglePopularClasses = ({ classes }) => {
     }
     return (
 
-        <div className=" gap-5 space-y-4 md:space-y-0">
+        <div  data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="600" className=" gap-5 space-y-4 md:space-y-0">
             <div className="max-w-sm relative bg-white px-6 pt-6 pb-2 h-[500px] rounded-xl shadow-lg transform  transition duration-500">
                 <h3 className="mb-3 text-xl font-bold text-indigo-600">{classes?.className}</h3>
                 <div className="relative">
