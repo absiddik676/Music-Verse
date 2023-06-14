@@ -5,6 +5,7 @@ import { useToasts } from 'react-toast-notifications';
 const ManageClasses = () => {
     const { addToast, toastStack } = useToasts();
     const [feedbackDataId, setFeedbackDataId] = useState('');
+    const [close,setClose] = useState(false)
     const { data: classes = [], refetch } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
@@ -36,11 +37,15 @@ const ManageClasses = () => {
     const openModal = (id) => {
         window.my_modal_1.showModal(feedbackDataId);
         setFeedbackDataId(id)
+        
     };
 
     const handleSendFeedback = (event) => {
         const data = event.target.text.value;
         console.log(feedbackDataId,data);
+        if(close === true){
+            return
+        }
         axios.put(`${import.meta.env.VITE_mainURL}/feedback/${feedbackDataId}`,{data})
         .then(res=>{
             console.log(res.data);
@@ -131,13 +136,14 @@ const ManageClasses = () => {
             {/* Open the modal using ID.showModal() method */}
 
             <dialog id="my_modal_1" className="modal">
-                <form onSubmit={handleSendFeedback} method="dialog" className="modal-box">
+                <form onSubmit={handleSendFeedback} method="dialog" className="modal-box relative">
                     <h3 className="font-bold text-lg mb-2">Feedback!</h3>
                     <textarea rows={'4'} cols={'62'} id='text' className="textarea  resize-none textarea-info " placeholder="Bio"></textarea>
                     <div className="modal-action">
                         {/* if there is a button in form, it will close the modal */}
-                        <button type='submit' className="btn">Send</button>
+                        <button onClick={()=>setClose(false)} type='submit' className="btn">Send</button>
                     </div>
+                    <button onClick={()=>setClose(true)} className=" absolute right-2 top-2">✕</button>
                 </form>
             </dialog>
         </div>
