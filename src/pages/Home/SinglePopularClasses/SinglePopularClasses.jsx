@@ -11,7 +11,6 @@ import 'aos/dist/aos.css'
 AOS.init();
 
 const SinglePopularClasses = ({ classes }) => {
-    
     const { user } = useContext(AuthContext)
     const { addToast, toastStack } = useToasts();
     const [isAdmin, isAdminLoading] = useAdmin()

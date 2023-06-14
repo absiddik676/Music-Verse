@@ -4,7 +4,9 @@ import { useToasts } from 'react-toast-notifications';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import useAdmin from '../../../hook/useAdmin';
 import useInstructor from '../../../hook/useInstructor';
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'
+AOS.init();
 const SingleClass = ({ singleClass }) => {
     const { user } = useContext(AuthContext)
     const { addToast, toastStack } = useToasts();
@@ -26,9 +28,9 @@ const SingleClass = ({ singleClass }) => {
         addToast(' log in before selecting the course', { appearance: 'error', autoDismiss: true, });
     }
 
-    console.log(user);
+    console.log(singleClass);
     return (
-        <div>
+        <div className='' data-aos="fade-up" data-aos-offset="20" data-aos-easing="ease-in-sine" data-aos-duration="600">
             <div className="card w-96 bg-base-100 ">
                 <figure><img className='h-52 rounded-t-lg' src={singleClass.imgURL} alt="Shoes" /></figure>
                 <div className="card-body hover:shadow-md ">
@@ -44,18 +46,18 @@ const SingleClass = ({ singleClass }) => {
                                 <button
                                     onClick={() => handelSelectClass(singleClass)}
                                     type="button"
-                                    className={`px-3 py-2 mt-7 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex ${isAdmin || isInstructor ? 'btn-disabled' : ''}`}
+                                    className={`px-3 py-2 mt-7 ${singleClass.AvailableSeats <= 0 ? 'bg-red-500 btn-disabled':'bg-blue-600'} rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex ${isAdmin || isInstructor ? 'btn-disabled' : ''}`}
                                 >
                                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                                     </svg>
-                                    <span className="ml-2">Select this class</span>
+                                    <span className="ml-2">{singleClass.AvailableSeats <= 0 ? 'Not available to sit':'Select this class'}</span>
                                 </button>
                             </> : <>
                                 <button
                                     onClick={handelShowMessage}
                                     type="button"
-                                    className={`px-3 py-2 mt-7 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex ${isAdmin || isInstructor ? 'btn-disabled' : ''}`}
+                                    className={`px-3 py-2 mt-7 bg-blue-600 rounded-md  text-white outline-none focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform flex ${isAdmin || isInstructor ? 'btn-disabled' : ''}`}
                                 >
                                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />

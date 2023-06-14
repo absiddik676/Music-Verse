@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import { AuthContext } from '../../../../Provider/AuthProvider';
+import useAxiosSecure from '../../../../hook/useAxiosSecure';
 const VITE_IMGBB_TOKEN = import.meta.env.VITE_IMGBB_TOKEN
 const AddaClass = () => {
     const {user} = useContext(AuthContext)
-    
+    const [axiosSecure] = useAxiosSecure()
     const { addToast, toastStack } = useToasts();
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${VITE_IMGBB_TOKEN}`
     const { register, handleSubmit,setValue, reset, formState: { errors } } = useForm({
@@ -43,7 +44,7 @@ const AddaClass = () => {
                 status:'pending'
             }
 
-            axios.post(`${import.meta.env.VITE_mainURL}/classes`,saveClassData)
+            axiosSecure.post(`/classes`,saveClassData)
             .then(res=>{
                 console.log(res.data);
                 reset()

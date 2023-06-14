@@ -2,21 +2,23 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useToasts } from 'react-toast-notifications';
+import useAxiosSecure from '../../../../hook/useAxiosSecure';
 const ManageClasses = () => {
     const { addToast, toastStack } = useToasts();
     const [feedbackDataId, setFeedbackDataId] = useState('');
+    const [axiosSecure] = useAxiosSecure()
     const [close,setClose] = useState(false)
     const { data: classes = [], refetch } = useQuery({
         queryKey: ['classes'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_mainURL}/classes`)
+            const res = await axiosSecure.get(`/classes`)
             return res.data
         }
     })
 
     const handleApproveClass = async (id) => {
         console.log(id);
-        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/approve-class/${id}`)
+        const res = await axiosSecure.patch(`/approve-class/${id}`)
         console.log(res.data.result);
         if (res.data.result.modifiedCount > 0) {
             refetch()
@@ -26,7 +28,7 @@ const ManageClasses = () => {
 
     const handelDenyClasses = async (id) => {
         console.log(id);
-        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/denied-class/${id}`)
+        const res = await axiosSecure.patch(`/denied-class/${id}`)
         console.log(res.data.result);
         if (res.data.result.modifiedCount > 0) {
             refetch()
@@ -46,7 +48,7 @@ const ManageClasses = () => {
         if(close === true){
             return
         }
-        axios.put(`${import.meta.env.VITE_mainURL}/feedback/${feedbackDataId}`,{data})
+        axiosSecure.put(`/feedback/${feedbackDataId}`,{data})
         .then(res=>{
             console.log(res.data);
             if(res.data.modifiedCount > 0){

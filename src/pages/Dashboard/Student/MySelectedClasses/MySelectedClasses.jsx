@@ -3,14 +3,16 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import SingleSelectedClass from '../SingleSelectedClass/SingleSelectedClass';
 import { AuthContext } from '../../../../Provider/AuthProvider';
+import useAxiosSecure from '../../../../hook/useAxiosSecure';
 
 const MySelectedClasses = () => {
     const { user, loading } = useContext(AuthContext)
+    const [axiosSecure] = useAxiosSecure()
     const { data: myClasses = [], refetch } = useQuery({
         queryKey: ['selectedClass'],
         enabled: !loading,
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/selected-class/${user?.email}`)
+            const res = await axiosSecure.get(`/selected-class/${user?.email}`)
             return res.data
         }
     })

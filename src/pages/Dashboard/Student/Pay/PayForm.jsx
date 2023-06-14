@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../../Provider/AuthProvider';
+import useAxiosSecure from '../../../../hook/useAxiosSecure';
 const PayForm = ({ data }) => {
     console.log(data);
     const { user } = useContext(AuthContext)
@@ -12,6 +13,7 @@ const PayForm = ({ data }) => {
     const [paymentSuccess, setPaymentSuccess] = useState('')
     const [clientSecret, setClientSecret] = useState("");
     const [Processing, setProcessing] = useState(false)
+    const [axiosSecure] = useAxiosSecure();
     const price = data.price;
     useEffect(() => {
        if(data.price > 0){
@@ -81,23 +83,23 @@ const PayForm = ({ data }) => {
                 CoursesId: data._id
             }
 
-            axios.post(`${import.meta.env.VITE_mainURL}/payment-history`, paymentData)
+            axiosSecure.post(`/payment-history`, paymentData)
                 .then(res => {
                     console.log(res.data);
                 })
 
-            axios.delete(`${import.meta.env.VITE_mainURL}/selected-class/${data._id}`)
+            axiosSecure.delete(`/selected-class/${data._id}`)
 
-            axios.post(`${import.meta.env.VITE_mainURL}/enrolled-data`,data)
+            axiosSecure.post(`/enrolled-data`,data)
             .then(res =>{
                 console.log(res.data);
             })
 
-            axios.patch(`${import.meta.env.VITE_mainURL}/available-student-count/${data.classId}`)
+            axiosSecure.patch(`/available-student-count/${data.classId}`)
             .then(res=>{
                 console.log(res);
             })
-            axios.put(`${import.meta.env.VITE_mainURL}/enrolled-student-count/${data.classId}`)
+            axiosSecure.put(`/enrolled-student-count/${data.classId}`)
             .then(res=>{
                 console.log(res);
             })

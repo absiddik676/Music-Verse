@@ -6,8 +6,7 @@ import Login from "../pages/Login/Login";
 import Classes from "../pages/Classes/classes/Classes";
 import Dashboard from "../Layout/Dashboard";
 import MySelectedClasses from "../pages/Dashboard/Student/MySelectedClasses/MySelectedClasses";
-import AddaClass from "../pages/Dashboard/Instrator/AddaClass/AddaClass";
-import Test from "../pages/Dashboard/Instrator/AddaClass/test";
+import AddaClass from "../pages/Dashboard/Instrator/AddaClass/AddaClass"
 import MyClasses from "../pages/Dashboard/Instrator/MyClasses/MyClasses";
 import ManageUser from "../pages/Dashboard/Admin/ManageUser/ManageUser";
 import ManageClasses from "../pages/Dashboard/Admin/ManageClasses/ManageClasses";
@@ -85,10 +84,6 @@ const router = createBrowserRouter([
           element:<AdminRoute><ManageClasses/></AdminRoute> // admin page
         },
       ]
-    },
-    {
-      path:'test',
-      element:<PrivateRoute><Test/></PrivateRoute>
     }
   ]);
   export default router;

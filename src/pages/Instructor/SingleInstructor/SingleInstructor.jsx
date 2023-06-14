@@ -1,9 +1,12 @@
 import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter, FaMapMarkerAlt, FaPhone, FaClock } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css'
+AOS.init();
 const SingleInstructor = ({ instructor }) => {
     console.log(instructor);
     return (
-        <div>
+        <div data-aos="fade-up" data-aos-offset="20" data-aos-easing="ease-in-sine" data-aos-duration="600">
             <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
                 <img className="w-full h-56 object-cover object-center" src={instructor.img} alt="avatar" />
 

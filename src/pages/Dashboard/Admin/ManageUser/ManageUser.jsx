@@ -3,15 +3,17 @@ import axios from 'axios';
 import React from 'react';
 import { RiUserAddLine , RiAdminLine } from 'react-icons/ri';
 import { useToasts } from 'react-toast-notifications';
+import useAxiosSecure from '../../../../hook/useAxiosSecure';
 const ManageUser = () => {
     const { addToast, toastStack } = useToasts();
+    const [axiosSecure] = useAxiosSecure()
     const { data: users = [], refetch } = useQuery(['user'], async () => {
-        const res = await axios.get(`${import.meta.env.VITE_mainURL}/user`)
+        const res = await axiosSecure.get(`/user`)
         return res.data
     })
     const handelMakeInstructor = async (user) =>{
         console.log(user._id);
-        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/make-instructor/${user._id}`)
+        const res = await axiosSecure.patch(`/make-instructor/${user._id}`)
         if(res.data.modifiedCount){
             addToast(`${user.name} is instructor now`, { appearance: 'success', autoDismiss: true, });
             refetch()
@@ -19,7 +21,7 @@ const ManageUser = () => {
     }
 
     const handelMakeAdmin = async (user) =>{
-        const res = await axios.patch(`${import.meta.env.VITE_mainURL}/make-admin/${user._id}`);
+        const res = await axiosSecure.patch(`/make-admin/${user._id}`);
         if(res.data.modifiedCount){
             addToast(`${user.name} is admin now`, { appearance: 'success', autoDismiss: true, });
             refetch()

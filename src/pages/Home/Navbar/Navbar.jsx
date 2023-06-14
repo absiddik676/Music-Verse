@@ -44,10 +44,10 @@ const Navbar = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
   const [isInstructor, isInstructorLoading] = useInstructor();
 
-  console.log(isStudent);
+  console.log(navbarBg);
   return (
     <div className=''>
-      <div className={`navbar mr-55 bg-transparent z-50 fixed ${navbarBg ? 'bg-[#140f24] text-white' : ''}`}>
+      <div className={`navbar mr-55 bg-transparent z-50 fixed ${navbarBg === true ? 'bg-gray-900 text-white' : ''}`}>
         <div className="navbar-start md:pl-20">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
